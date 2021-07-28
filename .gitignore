@@ -1,0 +1,7 @@
+.vscode
+*.code-workspace
+
+__pycache__
+*.env
+
+node_modules

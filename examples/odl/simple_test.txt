@@ -1,0 +1,11 @@
+GROUP = TEST
+NAME = "John Doe"
+Age  =  33
+GROUP = location
+country = "US"
+     StATe = "Massachusetts"     
+City       =  "Boston"
+         
+END_GROUP = location
+END_GROUP = TEST     
+END
