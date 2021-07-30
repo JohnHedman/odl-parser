@@ -2,10 +2,11 @@ GROUP = TEST
 NAME = "John Doe"
 Age  =  33
 GROUP = location
-country = "US"
+                                         country = "US"
      StATe = "Massachusetts"     
 City       =  "Boston"
          
 END_GROUP = location
-END_GROUP = TEST     
+END_GROUP = TEST   
+doc_maker = "Jane Doe"  
 END
