@@ -79,27 +79,6 @@ def _B(self, object_dictionary):
 
 It might be difficult to see how the rules are being followed by this function from a quick glance. Let's try to break it down by rule and see the path through the method for each rule.
 
-## `B -> KB`
-If we were to follow this rule we would go down the following path:  
-```python
-def _B(self, object_dictionary):
-        self._get_next_statement()
-        # if self.current_statement == "END":
-            # return object_dictionary
-        else:
-            key, value = self._get_statement_key_value(self.current_statement)
-
-            # if key in ["GROUP", "BEGIN_GROUP"]:
-                # object_dictionary = self._group_begin(value, object_dictionary)
-                # self._group_end(value)
-            # elif key == "END_GROUP":
-                # return object_dictionary
-            else:
-                object_dictionary[key] = self._convert_value(value)
-
-        return self._B(object_dictionary)
-```
-
 ## `B -> GhB`
 If we were to follow this rule we would go down the following path:  
 ```python
@@ -120,6 +99,8 @@ def _B(self, object_dictionary):
 
         return self._B(object_dictionary)
 ```
+*Ignore the `_get_next_statement()` & `_get_statement_key_value()` method calls, it is needed for the parser to work but doesn't matter for CFG rules.*  
+
 From following the path you can see that we end up calling the methods `_group_begins()`, `_group_ends()`, and `_B()` in that
 exact order.  The method `_group_begins()` actually implements rule `G` as does `_group_ends()` with rule `h`. These methods
 were given descriptive names to help for code practices/readability.  So this path ends up following the rules for `B -> GhB`.
@@ -131,6 +112,33 @@ follow the `B -> GhB` rule.  Now you can see how our program (emulating Recursiv
 grammar that we created which follows the specifications for pvl/odl.
 
 *Note: All lowercase rules map to regular expressions, thus creating only terminal symbols (terminal symbols are the actual characters in our string we are reading).*
+
+## `B -> KB`
+If we were to follow this rule we would go down the following path:  
+```python
+def _B(self, object_dictionary):
+        self._get_next_statement()
+        # if self.current_statement == "END":
+            # return object_dictionary
+        else:
+            key, value = self._get_statement_key_value(self.current_statement)
+
+            # if key in ["GROUP", "BEGIN_GROUP"]:
+                # object_dictionary = self._group_begin(value, object_dictionary)
+                # self._group_end(value)
+            # elif key == "END_GROUP":
+                # return object_dictionary
+            else:
+                object_dictionary[key] = self._convert_value(value)
+
+        return self._B(object_dictionary)
+```
+*Ignore the `_get_next_statement()` & `_get_statement_key_value()` method calls, it is needed for the parser to work but doesn't matter for CFG rules.*  
+
+The path ends up executing the code `object_dictionary[key] = self._convert_value(value)` which is actually the implementation of
+the `K` rule inside of the program. The method `_B()` is also recursively called inside of this path.  Since we ended up
+implementing the `K` rule and invoking the method that implements the `B` rule, we have successfully implemented the
+`B -> KB` rule inside of this method by following the path.
 
 ## `B -> λ`
 This rule is a little bit different in that there are multiple paths that follow this rule.
@@ -153,6 +161,8 @@ def _B(self, object_dictionary):
 
         # return self._B(object_dictionary)
 ```
+*Ignore the `_get_next_statement()` & `_get_statement_key_value()` method calls, it is needed for the parser to work but doesn't matter for CFG rules.*   
+
 Here you can see that we encountered the string `END` which means we are at the end of our acceptable input.
 The only rule that implements the `END` string is the rule `e -> END`.  The only rule that invokes the `e` rule is
 `A -> Be | e` and `A` is the starting symbol. This means that `B` was called from the rule `A` and the method `_B()` should return without invoking any other methods, thus implementing `B -> λ`. 
@@ -174,9 +184,8 @@ def _B(self, object_dictionary):
             # else:
                 # object_dictionary[key] = self._convert_value(value)
 ```
+*Ignore the `_get_next_statement()` & `_get_statement_key_value()` method calls, it is needed for the parser to work but doesn't matter for CFG rules.*  
+
 Since the `END_GROUP` key was encountered and the only rule that produces that string is `h` which maps to `h -> END_GROUP[ ]+=[ ]+[^;\n]+`, we should try to get to the method `h` is implemented inside of.  From our rules we can see that `h` is only invoked inside the rule `B -> GhB` but also that the `G` rule is invoked before h, though. Digging into the rule `G` we can see it
 maps to `G -> gB`. By combining the two previous rules we can get `B -> gBhB`.  We can assume that for this string to match our rules, we must be inside of the first `B` in the combined rule.  This means that in order to get to the method that
 implements the `h` rule, we must return from inside our `_B()` method without invoking any other methods, thus implementing `B -> λ`.
-
-
-    
