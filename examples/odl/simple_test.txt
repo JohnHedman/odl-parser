@@ -6,7 +6,7 @@ GROUP = location
                                          country = "US"
      StATe = "Massachusetts"     
 City       =  "Boston"
-  another_float = 00000.05; multi_line_float = -0000703.324e+13
+  another_float = 00000.05 ; multi_line_float = -0000703.324e+13
          
 END_GROUP = location
 END_GROUP = TEST   

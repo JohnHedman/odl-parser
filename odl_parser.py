@@ -66,15 +66,15 @@ class OdlParser():
         self.object_stack.pop()
 
     def _convert_value(self, value):
-        number_match = self._check_number_value(value)
+        number_match = self.check_number_value(value)
         if number_match is not None:
             return number_match
 
-        string_match = self._check_string_value(value)
+        string_match = self.check_string_value(value)
         if string_match is not None:
             return string_match
 
-        datetime_match = self._check_datetime_value(value)
+        datetime_match = self.check_datetime_value(value)
         if datetime_match is not None:
             return datetime_match
 
@@ -99,7 +99,7 @@ class OdlParser():
         return m.groupdict()["key"], m.groupdict()["value"]
 
     @classmethod
-    def _check_number_value(self, value):
+    def check_number_value(self, value):
         m = re.match(odl_expressions.number_expression, value)
         if m:
             m_dict = m.groupdict()
@@ -114,7 +114,7 @@ class OdlParser():
             return None
 
     @classmethod
-    def _check_string_value(self, value):
+    def check_string_value(self, value):
         for expression in odl_expressions.string_expressions:
             m = re.match(expression, value)
             if m:
@@ -122,7 +122,7 @@ class OdlParser():
         return None
 
     @classmethod
-    def _check_datetime_value(self, value):
+    def check_datetime_value(self, value):
         for expression in odl_expressions.datetime_expressions:
             m = re.match(expression, value)
             if m:
