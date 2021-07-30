@@ -1,0 +1,15 @@
+{
+    "TEST": {
+        "NAME": "John Doe",
+        "Age": 33,
+        "float_test": 2e-06,
+        "location": {
+            "country": "US",
+            "StATe": "Massachusetts",
+            "City": "Boston",
+            "another_float": 0.05,
+            "multi_line_float": -7033240000000000.0
+        }
+    },
+    "doc_maker": "Jane Doe"
+}

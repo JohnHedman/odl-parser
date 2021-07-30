@@ -100,7 +100,7 @@ class OdlParser():
         if m:
             m_dict = m.groupdict()
             if m_dict["decimal"] or m_dict["power"]:
-                return float(f'{m_dict["sign"] if m_dict["sign"] else ""}{m_dict["integer"] if m_dict["integer"] else ""}{m_dict["decimal"]}{m_dict["power"] if m_dict["power"] else ""}')  # noqa: E501
+                return float(f'{m_dict["sign"] if m_dict["sign"] else ""}{m_dict["integer"] if m_dict["integer"] else ""}{m_dict["decimal"] if m_dict["decimal"] else ""}{m_dict["power"] if m_dict["power"] else ""}')  # noqa: E501
             if m_dict["integer"]:
                 return int(f'{m_dict["sign"] if m_dict["sign"] else ""}{m_dict["integer"]}')  # noqa: E501
             # Only zero remains.
@@ -133,8 +133,6 @@ def convert_to_dict(odl_string):
 
 
 if __name__ == "__main__":
-    # test_file = "./examples/odl/LE07_L2SP_029030_20000326_20200918_02_T1_MTL.txt"
-    # test_file = "./examples/odl/ed_test.txt"
     test_file = "./examples/odl/simple_test.txt"
     with open(test_file, 'r') as input_file:
         odl_dictionary = convert_to_dict(input_file.read())

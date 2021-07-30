@@ -1,10 +1,12 @@
 GROUP = TEST
 NAME = "John Doe"
 Age  =  33
+    float_test = 2e-6
 GROUP = location
                                          country = "US"
      StATe = "Massachusetts"     
 City       =  "Boston"
+  another_float = 00000.05; multi_line_float = -0000703.324e+13
          
 END_GROUP = location
 END_GROUP = TEST   
