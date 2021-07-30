@@ -1,6 +1,6 @@
 key_value_expression = r"^(?P<key>\w+)[ ]+=[ ]+(?P<value>.+)$"
 
-number_expression = r"^(?P<sign>[+\-])?(?P<leading_zeros>0*)?(?P<integer>[1-9]\d*)?(?P<decimal>\.\d*)?(?P<power>[e|E][+\-]?\d+)?$"
+number_expression = r"^(?P<sign>[+\-])?(?P<leading_zeros>0*)?(?P<integer>[1-9]\d*)?(?P<decimal>\.\d*)?(?P<power>[e|E][+\-]?\d+)?$"  # noqa: E501
 
 datetime_expressions = [
     # examples that this re will match: 2020-10-29T11:30:51.000000Z, 2019-05-14

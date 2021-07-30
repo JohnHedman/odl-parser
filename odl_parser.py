@@ -45,8 +45,8 @@ class OdlParser():
 
             if key in ["GROUP", "BEGIN_GROUP"]:
                 object_dictionary = self._group_begin(value, object_dictionary)
-            elif key == "END_GROUP":
                 self._group_end(value)
+            elif key == "END_GROUP":
                 return object_dictionary
             else:
                 object_dictionary[key] = self._convert_value(value)
@@ -137,7 +137,7 @@ def convert_to_dict(odl_string):
 
 
 if __name__ == "__main__":
-    test_file = "./examples/odl/simple_test.txt"
+    test_file = "./examples/odl/LC08_L2SP_025021_20190514_20200828_02_T1_MTL.txt"
     with open(test_file, 'r') as input_file:
         odl_dictionary = convert_to_dict(input_file.read())
     with open("./converted.json", "w") as output_file:
