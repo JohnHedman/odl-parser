@@ -3,6 +3,10 @@ import json
 import odl_expressions
 
 
+class OdlParserError(Exception):
+    pass
+
+
 class OdlParser():
     """ODL Parser Class"""
     def __init__(self, odl_string, statement_termination_symbol="\n"):
@@ -56,9 +60,9 @@ class OdlParser():
 
     def _group_end(self, object_name):
         if not self.object_stack:
-            raise ValueError()
+            raise OdlParserError()
         if self.object_stack[-1] != object_name:
-            raise ValueError()
+            raise OdlParserError()
         self.object_stack.pop()
 
     def _convert_value(self, value):
@@ -75,14 +79,14 @@ class OdlParser():
             return datetime_match
 
         return value
-        # raise ValueError(f"Could not match value '{value}' to a valid json type!")
+        # raise OdlParserError(f"Could not match value '{value}' to a valid json type!")
 
     def _End(self, odl_dictionary):
         # If there are objects that have not been terminated (END_GROUP = OBJECT_NAME)
         # before the "END" symbol, then we raise an error.
         # TODO: Put error checking in for statements after "END" statement.
         if self.object_stack:
-            raise ValueError()
+            raise OdlParserError()
         # If there aren't any errors, finalize by
         # creating an attribute on the object.
         self.odl_dictionary = odl_dictionary
